@@ -1,3 +1,4 @@
+import {data} from "./keywords.js";
 var text = "",
     parsed = {};
 
@@ -16,11 +17,41 @@ window.addEventListener("DOMContentLoaded", function()
 
 function parseText()
 {
+    var originalText = text;
+    text = text.toLowerCase();
     console.log("parsing ...");
-    // TODO: parse text
+    var mxLen = 0;
+    var res = -1;
+    var word = "";
+    var keyword = "";
+    var label = "";
+    var ind;
 
-    
-
+    data.forEach(function(el)
+    {
+        el.data.forEach(function(keywordOriginal)
+        {
+            keyword = keywordOriginal.toLowerCase();
+            ind = text.indexOf(keyword);
+            if (ind!=-1)
+            {
+                if (mxLen<keyword.length)
+                {
+                    mxLen = keyword.length;
+                    word = keyword;
+                    res = ind;
+                    label = el.label;
+                }
+            }
+            console.log(1);
+        });
+        if (res!=-1) {
+            console.log("asd");
+            return;
+        }
+    });
+    text = originalText;
+    console.log(label);
     console.log("success!");
 }
 
