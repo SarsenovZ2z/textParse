@@ -9,7 +9,12 @@ window.addEventListener("DOMContentLoaded", function()
 
     document.getElementById("start-btn").onclick = function()
     {
-        parseText();
+        var tmp = text;
+        text = "";
+        for(var i=0;i<tmp.length;++i) {
+            text+=tmp[i];
+            parseText();
+        }
         updateFront();
     }
 
@@ -26,9 +31,10 @@ function parseText()
     var keyword = "";
     var label = "";
     var ind;
-
-    data.forEach(function(el)
+    var foundInd = -1;
+    for (var i = 0;i<data.length;++i)
     {
+        var el = data[i];
         el.data.forEach(function(keywordOriginal)
         {
             keyword = keywordOriginal.toLowerCase();
@@ -39,20 +45,25 @@ function parseText()
                 {
                     mxLen = keyword.length;
                     word = keyword;
-                    res = ind;
+                    res = i;
                     label = el.label;
+                    foundInd = ind;
                 }
             }
-            console.log(1);
         });
         if (res!=-1) {
-            console.log("asd");
+            data.splice(res, 1);
+
+            text.replace(keyword, "");
+            var val = text.substring(0, foundInd);
+            console.log({label: label, keyword: keyword, index: res, val});
+            text.replace(val, "");
+            // console.log(data);
             return;
         }
-    });
+        console.log("not found");
+    }
     text = originalText;
-    console.log(label);
-    console.log("success!");
 }
 
 function getParsedText()
