@@ -1,3 +1,10 @@
-export function init() {
-    return "asd";
-}
+export var content3 = {
+    'label': 'Дополнительно',
+    'data': [
+        'йцу',
+        'фывфывфывфыв',
+        // '',
+        // '',
+        // '',
+    ]
+};
