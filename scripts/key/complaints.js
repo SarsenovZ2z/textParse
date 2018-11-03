@@ -1,4 +1,4 @@
-tmp = {
+export var content1 = {
     'label': 'Жалобы при обращении',
     'data': [
         'Жалобы',
@@ -8,4 +8,3 @@ tmp = {
         // '',
     ]
 };
-export {tmp}; 

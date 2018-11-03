@@ -1,4 +1,4 @@
-tmp = {
+export var content = {
     'label': 'Дополнительно',
     'data': [
         'йцу',
@@ -8,4 +8,3 @@ tmp = {
         // '',
     ]
 };
-export {tmp};
