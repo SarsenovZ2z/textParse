@@ -1,10 +1,9 @@
 export var content17 = {
-    'label': 'Дополнительно',
+    'label': 'Status praesens (подробно)',
     'data': [
-        'йцу',
-        'фывфывфывфыв',
-        // '',
-        // '',
-        // '',
+        'подробно',
+        'status praesens',
+        'status praesens подробно',
+        'статус'
     ]
 };

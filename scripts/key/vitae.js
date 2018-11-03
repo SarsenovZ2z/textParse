@@ -1,10 +1,8 @@
 export var content18 = {
-    'label': 'Дополнительно',
+    'label': 'Anamnesis vitae (со слов пациента)',
     'data': [
-        'йцу',
-        'фывфывфывфыв',
-        // '',
-        // '',
-        // '',
+        'anamnesis vitae',
+        'анамнез vitae',
+        'анамнез жизни'
     ]
 };
