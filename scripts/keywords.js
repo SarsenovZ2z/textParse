@@ -28,8 +28,6 @@ import {content9} from "./key/home.js";
 data.push(content9);
 import {content10} from "./key/mobilephone.js";
 data.push(content10);
-// import {content1} from "./key/complaints.js";
-// data.push(tmp);
 import {content11} from "./key/morbi.js";
 data.push(content11);
 import {content12} from "./key/name.js";
