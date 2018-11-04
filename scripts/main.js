@@ -1,4 +1,5 @@
 import {data as dataOriginal} from "./keywords.js";
+// integrate
 var text = "",
     buffer = "",
     prevData = {index: -1},
@@ -11,6 +12,8 @@ window.addEventListener("DOMContentLoaded", function()
 
     document.getElementById("start-btn").onclick = function()
     {
+        // google response event handler
+        // integrate
         data = dataOriginal;
         parseText();
         updateFront();
@@ -18,6 +21,7 @@ window.addEventListener("DOMContentLoaded", function()
 
 });
 
+// integrate
 // handle google response
 function parseText()
 {
@@ -45,6 +49,7 @@ function parseText()
     console.log(parsed);
 }
 
+// integrate
 function tryToGetKeyWord()
 {
     var maxLen = 0;
@@ -78,6 +83,7 @@ function tryToGetKeyWord()
     return {keywords: tmp, index: dataIndex, position: position};
 }
 
+// integrate
 function getNormalizedValue(value)
 {
     var maxLen = 0;
@@ -100,6 +106,7 @@ function getNormalizedValue(value)
     return {keyword: maxKeyWord, value: value.toLowerCase().replace(maxKeyWord.toLowerCase(), '').replace(/^\s+|\s+$/gm,'')};
 }
 
+// integrate
 function getParsedText()
 {
     return text;
