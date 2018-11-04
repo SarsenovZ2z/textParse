@@ -1,74 +1,107 @@
-import {data} from "./keywords.js";
+import {data as dataOriginal} from "./keywords.js";
 var text = "",
-    parsed = {};
+    buffer = "",
+    prevData = {index: -1},
+    data = [],
+    parsed = [];
 
 window.addEventListener("DOMContentLoaded", function()
 {
-
     document.getElementById('input').addEventListener('change', readSingleFile, false);
 
     document.getElementById("start-btn").onclick = function()
     {
-        var tmp = text;
-        text = "";
-        for(var i=0;i<tmp.length;++i) {
-            text+=tmp[i];
-            parseText();
-        }
+        data = dataOriginal;
+        parseText();
         updateFront();
     }
 
 });
 
+// handle google response
 function parseText()
 {
-    var originalText = text;
-    text = text.toLowerCase();
     console.log("parsing ...");
-    var mxLen = 0;
-    var res = -1;
-    var word = "";
-    var keyword = "";
-    var label = "";
-    var ind;
-    var foundInd = -1;
+    var tmp = "";
+    for (var i = 0;i<text.length;++i)
+    {
+        buffer+=text[i];
+        if (text[i]!=' ')
+        {
+            var curr = tryToGetKeyWord();
+            if (curr.index!=-1)
+            {
+                if (prevData.index!=-1)
+                {
+                    tmp = buffer.substr(0, curr.position);
+                    parsed.push(getNormalizedValue(tmp));
+                    buffer = buffer.replace(tmp, '');
+                }
+                prevData = curr;
+            }
+        }
+    }
+    parsed.push(getNormalizedValue(buffer));
+    console.log(parsed);
+}
+
+function tryToGetKeyWord()
+{
+    var maxLen = 0;
+    var dataIndex = -1;
+    var ind = -1;
+    var position = -1;
+    var tmp = "";
+
     for (var i = 0;i<data.length;++i)
     {
         var el = data[i];
-        el.data.forEach(function(keywordOriginal)
+        el.data.forEach(function(keyword)
         {
-            keyword = keywordOriginal.toLowerCase();
-            ind = text.indexOf(keyword);
+            ind = buffer.toLowerCase().indexOf(keyword.toLowerCase());
             if (ind!=-1)
             {
-                if (mxLen<keyword.length)
+                if (maxLen < keyword.length)
                 {
-                    mxLen = keyword.length;
-                    word = keyword;
-                    res = i;
-                    label = el.label;
-                    foundInd = ind;
+                    position = ind;
+                    maxLen = keyword.length;
+                    dataIndex = i;
                 }
             }
         });
-        if (res!=-1) {
-            data.splice(res, 1);
-
-            text.replace(keyword, "");
-            var val = text.substring(0, foundInd);
-            console.log({label: label, keyword: keyword, index: res, val});
-            text.replace(val, "");
-            // console.log(data);
-            return;
-        }
-        console.log("not found");
     }
-    text = originalText;
+    if (dataIndex!=-1)
+    {
+        tmp = data[dataIndex].data.slice();
+        data.splice(dataIndex, 1);
+    }
+    return {keywords: tmp, index: dataIndex, position: position};
+}
+
+function getNormalizedValue(value)
+{
+    var maxLen = 0;
+    var maxKeyWord = "";
+    var ind;
+
+    for (var i in prevData.keywords)
+    {
+        var keyword = prevData.keywords[i];
+        ind = value.toLowerCase().indexOf(keyword.toLowerCase());
+        if (ind!=-1)
+        {
+            if (maxLen<keyword.length)
+            {
+                maxLen = keyword.length;
+                maxKeyWord = keyword;
+            }
+        }
+    }
+    return {keyword: maxKeyWord, value: value.toLowerCase().replace(maxKeyWord.toLowerCase(), '').replace(/^\s+|\s+$/gm,'')};
 }
 
 function getParsedText()
 {
-    // TODO: return html
     return text;
 }
 
